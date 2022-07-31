@@ -89,7 +89,28 @@ func askSpecies(_ residentName: ResidentInfo) -> String {
     guard allSpecies.contains(residentName.종.rawValue) else { return "새로운 종족입니다." }
     return residentName.종.rawValue
 }
-func listUpResidents(주민목록 residents: ResidentInfo...) -> (Array<ResidentInfo>, Array<String>, Int) {
+
+// 배열로 명단 작성
+func listUpResidents(주민목록 residents: ResidentInfo...) -> Array<ResidentInfo> {
+    var myResidents = [ResidentInfo]()
+    myResidents.append(contentsOf: residents)
+    return myResidents
+}
+typealias typeOfListUpResidents = ((종: Species, 성격: Personality, 취미: Hobby)...) -> Array<(종: Species, 성격: Personality, 취미: Hobby)>
+
+// 서식종 파악
+func listUpSpecies(주민목록: typeOfListUpResidents) {
+    let residents = typeOfListUpResidents
+    var mySpecies = [String]()
+    for resident in residents {
+        mySpecies.append(resident.0.rawValue)
+    }
+    let mySpeciesSet = Set(mySpecies)
+}
+
+// 메시지 생성 및 출력 (명단 일부요소 랜덤추출, 총 인구수)
+
+func listUpResidents1(주민목록 residents: ResidentInfo...) -> (Array<ResidentInfo>, Array<String>, Int) {
     var myResidents = [ResidentInfo]()
     myResidents.append(contentsOf: residents)  //인풋타입을 String으로 하면 아래가 문제, ResidentInfo로 받으면 여기가 문제.
     var mySpecies = [String]()
@@ -119,6 +140,6 @@ func listUpResidents(주민목록 residents: ResidentInfo...) -> (Array<Resident
 
 
 //실행문
-listUpResidents(주민목록: 네이아, 닌토, 미랑, 범호)
+listUpResidents1(주민목록: 네이아, 닌토, 미랑, 범호)
 
 
